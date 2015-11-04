@@ -7,11 +7,12 @@ ENCRYPTED=`perl -e 'print crypt('"$PASSWORD"', "aa"),"\n"'`
 useradd -m -d /home/$USERID -p $ENCRYPTED $USERID
 adduser $USERID sudo
 chsh -s /bin/bash $USERID  # Set the default shell as bash
+chown $USERID  /home/$USERID
 
-
-# Install Convert Tool and Environment
-su - $USERID -c "/usr/local/bin/install_tool.sh"
+# Setup Environment
+su - $USERID -c "/usr/local/bin/setup_env.sh"
 locale-gen en_US.UTF-8
+
 
 # Start Samba server
 cat >> /etc/samba/smb.conf <<ENDCONF
@@ -32,4 +33,8 @@ su - $USERID -c "sleep 3; export LANG=en_US.UTF-8; xterm -display :15" &
 
 # Start SSH daemon
 mkdir /var/run/sshd
-/usr/sbin/sshd -D
+/usr/sbin/sshd 
+
+
+# Terminal
+su - $USERID

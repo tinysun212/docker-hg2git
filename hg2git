@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]
+then
+    echo "Usage: $0  <mercurial repository>"
+    exit
+fi
+
+if [ ! -d "$1/.hg" ]
+then
+    echo "$1 is not mercurial repository!"
+    exit
+fi
+
+rm -rf "$1"_git
+git init "$1"_git
+cd "$1"_git
+/opt/fast-export/hg-fast-export.sh -r "../$1"  --force --fe euc-kr
