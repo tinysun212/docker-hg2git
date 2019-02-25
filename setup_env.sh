@@ -10,5 +10,5 @@ cat >> ~/.profile <<ENDPROFILE
 LANG=en_US.UTF-8
 export LANG
 
-cd Temp
+[ -d Temp ] && cd Temp
 ENDPROFILE
